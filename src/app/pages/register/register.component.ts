@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RegisterReqObj, UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,32 +10,34 @@ import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms'
 })
 export class RegisterComponent implements OnInit {
 
-  signupForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
-    this.signupForm = this.fb.group({
-
-    })
+  signupForm = new FormGroup({
+    email: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    passwordAgain: new FormControl('',Validators.required),
+    agreed: new FormControl(false)
+  })
+  constructor(private fb: FormBuilder,
+    public userService: UserAuthService,
+    private router: Router,) {
   }
 
   ngOnInit() {
-
-    const password = new FormControl('', Validators.required);
-    const confirmPassword = new FormControl('');
-  
-    this.signupForm = this.fb.group(
-      {
-        username: ["",Validators.required],
-        email: ["",[Validators.required,Validators.email]],
-        password: password,
-        agreed: [false,Validators.required]
-      }
-    );
   }
 
   onSubmit() {
     if (!this.signupForm.invalid) {
-      // do what you wnat with your data
+      let obj: RegisterReqObj = {
+        email: this.signupForm.value.email,
+        username: this.signupForm.value.username,
+        firstName: this.signupForm.value.firstName,
+        lastName: this.signupForm.value.lastName,
+        password: this.signupForm.value.password,
+        passwordConfirmation: this.signupForm.value.passwordAgain,
+      }
+      this.userService.register(obj)
       console.log(this.signupForm.value);
     }
   }

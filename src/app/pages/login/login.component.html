@@ -5,8 +5,8 @@
     <img class="img" src="https://source.unsplash.com/random" alt="https://source.unsplash.com/random">
   </div>
 
-  <div fxFlex="40">
-    <form fxLayout="column" fxLayoutAlign="space-between center" [formGroup]="signupForm" class="signup4-form mat-bg-card" (ngSubmit)="onSubmit()">
+  <div fxLayout="column" fxFlex="40">
+    <form fxLayout="column" fxFlex="100" fxLayoutAlign="space-between center" [formGroup]="signupForm" class="signup4-form mat-bg-card" (ngSubmit)="onSubmit()">
       
       <mat-icon aria-hidden="false" class="mb-16 p-icon" aria-label="Example home icon">person</mat-icon>
       <h2>Sign In</h2>
@@ -35,11 +35,11 @@
       <mat-checkbox formControlName="agreed"
       >I agree with terms and condtions</mat-checkbox
     >
-    
+    <mat-error *ngIf="userService.error"> {{ userService.error }} </mat-error>
     <div fxLayout="row wrap" fxLayoutAlign="start center" style="margin-top: 20px;">
-      <button mat-flat-button color="primary">Sign In</button>
+      <button [disabled]="isSubmitting" mat-flat-button color="primary">Sign In</button>
       <span class="px-16">or</span>
-      <a class="font-weight-bold mat-color-primary" routerLink="/sessions/signup4">Sign Up</a>
+      <a class="font-weight-bold mat-color-primary" routerLink="/register">Sign Up</a>
     </div>
 
     <!-- <div fxLayout="row wrap" fxLayoutAlign="space-between center" style="margin-top: 20px">
@@ -50,5 +50,10 @@
       </div> -->
 
   </form>
+ 
+  <div *ngIf="isSubmitting" class="pt-24 " fxLayout="column" fxFlex="100" fxLayoutAlign="space-between center">
+    <mat-spinner></mat-spinner>
   </div>
+  </div>
+
 </div>
