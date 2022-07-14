@@ -26,6 +26,35 @@ export const REGISTER_USER = gql`
     }
   }
 `
+export const CHANGE_EMAIL = gql`
+mutation updateEmail($email: String!){
+  updateEmail(email: $email)
+}
+`
+export const CHANGE_PASSWORD = gql`
+  mutation updatePassword($oldPassword: String!, $newPassword: String!, $confirmNewPassword: String!){
+    updatePassword(oldPassword: $oldPassword, newPassword: $newPassword, confirmNewPassword: $confirmNewPassword)
+  }
+`
+export const ADD_SECONDARY_EMAIL = gql`
+mutation addEmail($email: String!){
+  addEmail(email: $email)
+}
+`
+export const DELETE_EMAIL = gql`
+  mutation deleteEmail($id: Int!){
+    deleteEmail(id: $id)
+  }
+`
+export const SET_PRIMARY_EMAIL = gql`
+  mutation setPrimaryEmail($id: Int!){
+    setPrimaryEmail(id: $id)
+  }
+`
+
+
+
+
 // # Queries 
 export const GET_USER_INFO = gql`
 query getUser {
@@ -37,3 +66,17 @@ query getUser {
   }
 }
 `;
+
+export const GET_EMAILS = gql`
+query getUserEmails{
+  getUserEmails {
+    user_emails {
+      id
+      email
+      isVerified
+      isPrimary
+    }
+    
+  }
+}
+`

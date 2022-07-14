@@ -5,6 +5,9 @@ import { AuthGuard } from '../app/shared/Guards/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
+import { SettingsComponent } from './settings/settings.component';
+import { UserLayoutComponent } from './shared/components/layouts/UserLayout/user-layout.component';
+
 
 export const rootRouterConfig: Routes = [
 
@@ -15,6 +18,16 @@ export const rootRouterConfig: Routes = [
         path: 'register', component: RegisterComponent
     },
     {
-        path: 'home', component: HomeComponent,
+        path: 'home', component: UserLayoutComponent,
+        children: [
+            { path: '', component: HomeComponent },
+        ]
     },
+    {
+        path: 'settings', component: UserLayoutComponent,
+        children: [
+            { path: '', component: SettingsComponent },
+        ]
+    },
+    
 ]

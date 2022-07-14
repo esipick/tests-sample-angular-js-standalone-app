@@ -27,6 +27,9 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatListModule} from '@angular/material/list';
 
 
 // services 
@@ -34,13 +37,19 @@ import { UserAuthService} from './services/user-auth.service'
 import { AuthGuard } from './shared/Guards/auth.guard';
 import { LocalStoreService } from './services/local-storage.service';
 import { JwtInterceptor } from './interceptors/token.interceptor';
+import { SettingsComponent } from './settings/settings.component';
+import { UserLayoutComponent } from './shared/components/layouts/UserLayout/user-layout.component';
+import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    SettingsComponent,
+    UserLayoutComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +68,10 @@ import { JwtInterceptor } from './interceptors/token.interceptor';
     MatIconModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule,
+    MatSnackBarModule,
+    MatListModule
 
   ],
   providers: [

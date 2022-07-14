@@ -22,17 +22,11 @@ export class HomeComponent implements OnInit {
       }
       this.userService.getUserData()
 
-      console.log(this.userService.data)
    }
 
   ngOnInit(): void {
-    console.log(this.userService.userData)
   }
 
-  public logout(){
-    console.log('lopgout')
-    this.ls.clear()
-    this.userService.navigateTo('/')
-  }
+  
 
 }

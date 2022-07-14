@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { LOGIN ,REGISTER_USER , GET_USER_INFO } from '../shared/apollo/requests'
+import { LOGIN ,REGISTER_USER , GET_USER_INFO, CHANGE_EMAIL, CHANGE_PASSWORD, GET_EMAILS, ADD_SECONDARY_EMAIL, SET_PRIMARY_EMAIL, DELETE_EMAIL } from '../shared/apollo/requests'
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { UserAuthResponseObject } from '../shared/apollo/request-model';
 import { LocalStoreService } from './local-storage.service';
 import { User } from '../shared/apollo/request-model';
 import { Router } from '@angular/router';
+import { userData, RegisterReqObj, changePassword, userEmail } from '../models/user.model';
+import { UtilsService } from './utils.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,10 +16,17 @@ import { Router } from '@angular/router';
 export class UserAuthService {
   public data: any = ''
   public error: any = ''
+  public message: any = ''
   private querySubscription!: Subscription;
   public userData!: userData;
-  constructor(private apollo: Apollo,  private ls: LocalStoreService , private router: Router) {
-    
+  public userEmails!: userEmail[]
+
+  constructor(
+    private apollo: Apollo,
+    private ls: LocalStoreService, 
+    private router: Router,
+    private utils: UtilsService
+    ) {
    }
 
    public navigateTo(url: any){
@@ -34,10 +43,12 @@ export class UserAuthService {
     })
     .subscribe(({ data }) => {
       this.data = data
+      this.utils.openSnackBar("logedin successfully")
       this.ls.setItem('Access_Token', this.data.login.token)
       this.ls.setItem('USER', this.data.login.user)
-      this.navigateTo('/register')
+      this.navigateTo('/home')
     },(error) => {
+      this.utils.openSnackBar(error.message)
       this.error = error.message
     });
   }
@@ -49,9 +60,11 @@ export class UserAuthService {
         input
       }
     }) .subscribe(({ data }) => {
+      this.utils.openSnackBar("registerd successfully")
       this.data = data
       this.navigateTo('/')
     },(error) => {
+      this.utils.openSnackBar(error.message)
       this.error = error.message
     });
   }
@@ -62,32 +75,96 @@ export class UserAuthService {
     }) .valueChanges
     .subscribe(({ data, loading }) => {
       this.userData = data.getUser;
-      console.log(this.userData)
     });
   }
+
+  public changeEmail(email: string | any){
+    this.apollo.mutate({
+      mutation: CHANGE_EMAIL,
+      variables: {
+         email
+      }
+    }).subscribe(({ data }) => {
+      // this.utils.openSnackBar(data)
+    }, (error) => {
+        this.utils.openSnackBar(error.message)
+    })
+  }
+
+  public changePassword(input: changePassword) {
+   return  this.apollo.mutate({
+      mutation: CHANGE_PASSWORD,
+      variables: 
+        input  
+    })
+  }
+
+  public getUserEmails(){
+    this.querySubscription = this.apollo.watchQuery<any>({
+      query: GET_EMAILS,
+      fetchPolicy: "network-only"
+    }) .valueChanges
+    .subscribe(({ data, loading }) => {
+
+      this.userEmails = data.getUserEmails.user_emails;
+    });
+  }
+
+  public addSecondaryEmail(email: string | any ){
+    this.apollo.mutate({
+      mutation: ADD_SECONDARY_EMAIL,
+      variables: {
+        email
+      }
+    }).subscribe(({ data }) => {
+      this.message = data
+      this.utils.openSnackBar(this.message.addEmail)
+      this.getUserEmails()
+    }, (error ) => {
+      this.utils.openSnackBar(error.message)
+    })
+  }
+
+  public setPrimary (email: userEmail) {
+    this.apollo.mutate({
+      mutation: SET_PRIMARY_EMAIL,
+      variables: {
+        id: email.id
+      }
+    }).subscribe(({ data }) => {
+      this.message = data 
+      this.utils.openSnackBar(this.message.setPrimaryEmail)
+      this.getUserEmails()
+    }, (error) => {
+      this.utils.openSnackBar(error.message)
+    })
+  }
+
+  public deleteEmail (email: userEmail) {
+
+    this.apollo.mutate({
+      mutation: DELETE_EMAIL,
+      variables: {
+        id: email.id
+      }
+    }).subscribe(({ data }) => {
+      this.message = data 
+      this.utils.openSnackBar(this.message.deleteEmail)
+      this.getUserEmails()
+    }, (error) => {
+      this.utils.openSnackBar(error.message)
+    })
+  }
+  public logout() {
+    this.ls.clear()
+    this.navigateTo("/")
+  }
+
 
   ngOnDestroy() {
     this.querySubscription.unsubscribe();
   }
+
+
 }
 
-interface resp {
-  data?: {
-    token: string,
-    user: User
-  }
-}
-export interface RegisterReqObj {
-  email: string | any
-  username: string | any
-  firstName: string | any
-  lastName: string | any
-  password: string | any
-  passwordConfirmation: string | any
-}
-interface userData {
-  email: string | any
-  username: string | any
-  lastName: string | any
-  firstName: string | any
-}

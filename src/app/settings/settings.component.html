@@ -1,0 +1,112 @@
+<section class="section-1">
+    <mat-tab-group class="tab">
+        <mat-tab label="Change Email">
+            <ng-container *ngTemplateOutlet="temp1;">
+            </ng-container>
+        </mat-tab>
+        <mat-tab label="Change Password">
+            <ng-container *ngTemplateOutlet="temp2;">
+            </ng-container>
+        </mat-tab>
+        <mat-tab label="Add Secondary Email">
+            <ng-container *ngTemplateOutlet="temp3;">
+            </ng-container>
+        </mat-tab>
+    </mat-tab-group>
+</section>
+
+
+<ng-template #temp1>
+    <mat-card>
+        <form [formGroup]="changeEmailForm" class="change-email-form mat-bg-card" (ngSubmit)="changeEmail()">
+            <div>
+                <h2>Change Email</h2>
+                <h3>Enter a Valid Email</h3>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" type="email" name="email" placeholder="Email" />
+                </mat-form-field>
+                <div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top: 20px;">
+                    <button [disabled]="false" mat-flat-button color="primary">Change Email</button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</ng-template>
+
+<ng-template #temp2>
+    <mat-card>
+        <form [formGroup]="changePasswordForm" class="change-password-form mat-bg-card" (ngSubmit)="changePassword()">
+            <div>
+                <h2>Update Password</h2>
+                <h3>Enter a new password</h3>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Old Password</mat-label>
+                    <input matInput formControlName="oldPassword" type="password" name="oldpassword"
+                        placeholder="Old Password" />
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>New Password</mat-label>
+                    <input matInput formControlName="newPassword" type="password" name="newpassword"
+                        placeholder="New Password" />
+                </mat-form-field>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Confirm New Password</mat-label>
+                    <input matInput formControlName="confirmNewPassword" type="password" name="confnewpassword"
+                        placeholder="Confirm New Password" />
+                </mat-form-field>
+                <mat-error *ngIf="error"> {{ error }} </mat-error>
+                <div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top: 20px;">
+                    <button [disabled]="false" mat-flat-button color="primary">Change Password</button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</ng-template>
+
+<ng-template #temp3>
+    <mat-card fxFlex="row" fxLayoutAlign="space-between center">
+        <form [formGroup]="addSecodnaryEmailForm" class="secondary-email-form mat-bg-card"
+            (ngSubmit)="addSecondaryEmail()">
+            <div fxFlex="50">
+                <h2>Add Secondary Email Password</h2>
+                <h3>Enter a Valid Email</h3>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Email </mat-label>
+                    <input matInput formControlName="email" type="email" name="email" placeholder="Old Password" />
+                </mat-form-field>
+                <mat-error *ngIf="error"> {{ error }} </mat-error>
+                <div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top: 20px;">
+                    <button [disabled]="false" mat-flat-button color="primary">Add Email</button>
+                </div>
+            </div>
+        </form>
+        <div fxFlex="50">
+
+            <mat-list role="list">
+                <h2>Primary Email</h2>
+                <ng-container *ngFor="let email of userService?.userEmails" >
+                <mat-list-item   *ngIf="email.isPrimary" >
+                        {{ email.email }}
+                    </mat-list-item>
+                </ng-container>
+            </mat-list>
+            <mat-list role="list">
+                <h2> Secondary Emails</h2>
+                <ng-container *ngFor="let email of userService?.userEmails" >
+                <mat-list-item  *ngIf="!email.isPrimary" >
+                <ng-container >
+                    <span fxFlex="50">
+                        {{ email?.email }}
+                    </span>
+                    <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-evenly center">
+                        <button (click)="onSetPrimary(email)" mat-flat-button color="accent">Set as Primary</button>
+                        <button (click)="onDeleteEmail(email)" mat-flat-button color="warn">Delete Email</button>
+                    </div>
+                </ng-container>
+                    </mat-list-item>
+                </ng-container>
+            </mat-list>
+        </div>
+    </mat-card>
+</ng-template>
