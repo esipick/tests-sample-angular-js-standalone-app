@@ -26,6 +26,7 @@ export class EmailVerificationComponent implements OnInit {
         code: this.code,
         emailId: parseInt(this.emailId)
       }
+      console.log(obj)
       this.userService.verifyEmail(obj)
     } else {
       this.userService.navigateTo("/")

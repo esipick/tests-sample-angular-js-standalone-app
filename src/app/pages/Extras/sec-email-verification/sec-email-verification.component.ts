@@ -28,6 +28,7 @@ export class SecEmailVerificationComponent implements OnInit {
         code: this.code,
         emailId: parseInt(this.emailId)
       }
+      console.log(obj)
       this.userService.secondaryEmailVerfification(obj)
     } else {
       this.userService.navigateTo("/")

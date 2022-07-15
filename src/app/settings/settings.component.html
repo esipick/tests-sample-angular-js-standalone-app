@@ -65,10 +65,9 @@
 </ng-template>
 
 <ng-template #temp3>
-    <mat-card fxFlex="row" fxLayoutAlign="space-between center">
-        <form [formGroup]="addSecodnaryEmailForm" class="secondary-email-form mat-bg-card"
+    <mat-card fxFlex="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <form fxFlex="30" [formGroup]="addSecodnaryEmailForm" class="secondary-email-form mat-bg-card"
             (ngSubmit)="addSecondaryEmail()">
-            <div fxFlex="50">
                 <h2>Add Secondary Email Password</h2>
                 <h3>Enter a Valid Email</h3>
                 <mat-form-field class="full-width" appearance="outline">
@@ -79,9 +78,8 @@
                 <div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top: 20px;">
                     <button [disabled]="false" mat-flat-button color="primary">Add Email</button>
                 </div>
-            </div>
         </form>
-        <div fxFlex="50">
+        <div fxFlex="60">
 
             <mat-list role="list">
                 <h2>Primary Email</h2>
@@ -96,12 +94,15 @@
                 <ng-container *ngFor="let email of userService?.userEmails" >
                 <mat-list-item  *ngIf="!email.isPrimary" >
                 <ng-container >
-                    <span fxFlex="50">
+                    <span fxFlex="40">
                         {{ email?.email }}
                     </span>
-                    <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-evenly center">
+                    <div fxFlex="30" fxLayout="row" fxLayoutAlign="space-evenly center">
                         <button (click)="onSetPrimary(email)" mat-flat-button color="accent">Set as Primary</button>
                         <button (click)="onDeleteEmail(email)" mat-flat-button color="warn">Delete Email</button>
+                    </div>
+                    <div  class="status" fxFlex="30">
+                        <h1 >Status : <span [ngStyle]="{'color': email.isVerified ? 'green' : 'red' }"> {{ email.isVerified ? "Verified" : "Not Verified!" }}</span> </h1> 
                     </div>
                 </ng-container>
                     </mat-list-item>
