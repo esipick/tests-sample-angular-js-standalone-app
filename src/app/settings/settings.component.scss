@@ -34,3 +34,9 @@
 .status {
     padding-top: 10px;
 }
+
+
+::ng-deep .primary-email .mat-list-item-content {
+    display: flex;
+    justify-content: space-between;
+}

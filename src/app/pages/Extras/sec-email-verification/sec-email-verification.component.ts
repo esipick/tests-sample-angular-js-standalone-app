@@ -18,8 +18,8 @@ export class SecEmailVerificationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserAuthService
   ) { 
-    this.emailId = this.activatedRoute.snapshot.paramMap.get('code')
-    this.code = this.activatedRoute.snapshot.paramMap.get('emailId')
+    this.emailId = this.activatedRoute.snapshot.paramMap.get('emailId')
+    this.code = this.activatedRoute.snapshot.paramMap.get('code')
   }
 
   ngOnInit(): void {
@@ -28,7 +28,6 @@ export class SecEmailVerificationComponent implements OnInit {
         code: this.code,
         emailId: parseInt(this.emailId)
       }
-      console.log(obj)
       this.userService.secondaryEmailVerfification(obj)
     } else {
       this.userService.navigateTo("/")

@@ -81,11 +81,12 @@
         </form>
         <div fxFlex="60">
 
-            <mat-list role="list">
+            <mat-list class="primary-email" role="list">
                 <h2>Primary Email</h2>
                 <ng-container *ngFor="let email of userService?.userEmails" >
                 <mat-list-item   *ngIf="email.isPrimary" >
                         {{ email.email }}
+                        <h1 >Status : <span [ngStyle]="{'color': email.isVerified ? 'green' : 'red' }"> {{ email.isVerified ? "Verified" : "Not Verified!" }}</span> </h1>
                     </mat-list-item>
                 </ng-container>
             </mat-list>
