@@ -21,7 +21,6 @@ export class ToolbarComponent implements OnInit {
   }
 
   public logout(){
-    console.log('lopgout')
     this.ls.clear()
     this.userService.navigateTo('/')
   }
