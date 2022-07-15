@@ -11,6 +11,7 @@ export interface RegisterReqObj {
     lastName: string | any
     password: string | any
     passwordConfirmation: string | any
+    platform: string | any
 }
 export interface userData {
     email: string | any
@@ -44,4 +45,9 @@ export interface userEmail {
     email: string | null | undefined
     isVerified: boolean | null | undefined
     isPrimary:  boolean | null | undefined
+}
+
+export interface emailVerificationParams {
+    code: string | null
+    emailId: number | null
 }

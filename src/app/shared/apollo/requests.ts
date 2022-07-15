@@ -2,8 +2,8 @@ import { gql } from 'apollo-angular';
 
 // # Mutations 
 export const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login( email: $email, password: $password ) {
+  mutation login($email: String!, $password: String!, $platform: String!) {
+    login( email: $email, password: $password, platform: $platform ) {
         user {
             firstName
             lastName
@@ -79,4 +79,14 @@ query getUserEmails{
     
   }
 }
+`
+export const VERIFY_EMAIL = gql`
+query verifyEmail($code: String!, $emailId: Int! ) {
+  verifyEmail(code:$code, emailId: $emailId) 
+}
+`;
+export const VERIFIY_SECONDARY_EMAIL = gql`
+  query verifySecondaryEmail($code: String!, $emailId: Int!){
+    verifySecondaryEmail(code: $code,  emailId: $emailId)
+  }
 `

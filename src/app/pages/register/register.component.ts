@@ -37,9 +37,9 @@ export class RegisterComponent implements OnInit {
         lastName: this.signupForm.value.lastName,
         password: this.signupForm.value.password,
         passwordConfirmation: this.signupForm.value.passwordAgain,
+        platform: "ANGULAR"
       }
       this.userService.register(obj)
-      console.log(this.signupForm.value);
     }
   }
 }

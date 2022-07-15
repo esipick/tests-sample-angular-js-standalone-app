@@ -40,6 +40,8 @@ import { JwtInterceptor } from './interceptors/token.interceptor';
 import { SettingsComponent } from './settings/settings.component';
 import { UserLayoutComponent } from './shared/components/layouts/UserLayout/user-layout.component';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
+import { EmailVerificationComponent } from './pages/Extras/email-verification/email-verification.component';
+import { SecEmailVerificationComponent } from './pages/Extras/sec-email-verification/sec-email-verification.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
     SettingsComponent,
     UserLayoutComponent,
     ToolbarComponent,
+    EmailVerificationComponent,
+    SecEmailVerificationComponent,
   ],
   imports: [
     BrowserModule,
