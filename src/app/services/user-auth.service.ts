@@ -169,7 +169,7 @@ export class UserAuthService {
         this.utils.openSnackBar(error.message)
         setTimeout(() => {
           this.navigateTo("/")
-        }, 1500)
+        }, 2000)
       });
   }
 
@@ -186,7 +186,7 @@ export class UserAuthService {
         this.utils.openSnackBar(error.message)
         setTimeout(() => {
           this.navigateTo("/")
-        }, 1500)
+        }, 2000)
       });
   }
 

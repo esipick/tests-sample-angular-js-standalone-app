@@ -43,4 +43,3 @@ export class RegisterComponent implements OnInit {
     }
   }
 }
-// sample-angular-js-standalone-app
