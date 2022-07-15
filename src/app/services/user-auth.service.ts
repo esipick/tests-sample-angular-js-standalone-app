@@ -165,6 +165,7 @@ export class UserAuthService {
       .subscribe(({ data, loading }) => {
         this.message = data
         this.utils.openSnackBar(data.verifyEmail)
+        this.navigateTo("/home")
       }, (error) => {
         this.utils.openSnackBar(error.message)
         setTimeout(() => {
@@ -182,6 +183,7 @@ export class UserAuthService {
       .subscribe(({ data, loading }) => {
         this.message = data
         this.utils.openSnackBar(data.verifySecondaryEmail)
+        this.navigateTo("/home")
       }, (error) => {
         this.utils.openSnackBar(error.message)
         setTimeout(() => {
